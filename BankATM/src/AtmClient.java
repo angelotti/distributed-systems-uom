@@ -42,16 +42,25 @@ public class AtmClient {
 				BufferedReader in = new BufferedReader(new InputStreamReader(cSocket.getInputStream()));
 				) {
 			System.out.println("\n***Welcome to MY Bank***\n");
+			
+			
 
 			while (!terminate) {
 				printMenu();
 				getInput();
+				while(!(fromUser.matches("[1,2,3,4]")/*fromUser.equals("1") || fromUser.equals("2") ||
+						fromUser.equals("3") || fromUser.equals("4") */) ) {
+					System.out.println("\nMust be a number from 1 to 4: ");
+					getInput();
+				}
+				
 				if (fromUser.equals("1")) {
-					out.println(withdraw());
+					out.println("1" + withdraw());
 					fromServer = in.readLine();
 				}
 				else if (fromUser.equals("2")) {
-					deposit();
+					out.println("2" + deposit());
+					fromServer = in.readLine();
 				}
 				else if (fromUser.equals("3")) {
 					out.println("3");
@@ -107,6 +116,15 @@ public class AtmClient {
 			fromUser = stdIn.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void connectAccount() {
+		System.out.println("\nGive your account ID :");
+		getInput();
+		while(!fromUser.matches("\\d+")){
+			System.out.println("\nMust be a number");
+			getInput();
 		}
 	}
 	
