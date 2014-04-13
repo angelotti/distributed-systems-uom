@@ -40,10 +40,11 @@ public class AtmClient {
 				Socket cSocket = new Socket(host, portNumber);
 				PrintWriter out = new PrintWriter(cSocket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(cSocket.getInputStream()));
-				) {
+		) {
 			System.out.println("\n***Welcome to MY Bank***\n");
 			
-			
+			connectAccount();
+			out.println("ID "+fromUser);
 
 			while (!terminate) {
 				printMenu();
@@ -55,15 +56,15 @@ public class AtmClient {
 				}
 				
 				if (fromUser.equals("1")) {
-					out.println("1" + withdraw());
+					out.println("1 " + withdraw());
 					fromServer = in.readLine();
 				}
 				else if (fromUser.equals("2")) {
-					out.println("2" + deposit());
+					out.println("2 " + deposit());
 					fromServer = in.readLine();
 				}
-				else if (fromUser.equals("3")) {
-					out.println("3");
+				else if (fromUser.equals("3 ")) {
+					out.println("3 ");
 					balance(in.readLine());
 				}
 				else {
@@ -112,8 +113,14 @@ public class AtmClient {
 	}
 	
 	public void getInput() {
+		boolean flag = true;
 		try{
-			fromUser = stdIn.readLine();
+			while (flag) {
+				fromUser = stdIn.readLine();
+				fromUser.trim();
+				if(fromUser.matches("\\d+")) { flag = false; }
+				else { System.out.println("Must type digits!"); }
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
