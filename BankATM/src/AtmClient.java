@@ -12,13 +12,13 @@ public class AtmClient {
 	public static void main(String[] args)   throws IOException {
 	
 	
-		if (args.length != 1) {
+		if (args.length != 0) {
             System.err.println(
                 "Usage: java AtmClient  <port number>");
             System.exit(1);
         }
 		
-		int portNumber = Integer.parseInt(args[0]);
+		int portNumber = 1234;//Integer.parseInt(args[0]);
 		AtmClient atm = new AtmClient(portNumber);
 
 	}
@@ -45,32 +45,41 @@ public class AtmClient {
 			
 			connectAccount();
 			out.println("ID "+fromUser);
+			System.out.println(in.readLine());
 
 			while (!terminate) {
 				printMenu();
 				getInput();
-				while(!(fromUser.matches("[1,2,3,4]")/*fromUser.equals("1") || fromUser.equals("2") ||
-						fromUser.equals("3") || fromUser.equals("4") */) ) {
+				/*while(!(fromUser.matches("[1,2,3,4]")/*fromUser.equals("1") || fromUser.equals("2") ||
+						fromUser.equals("3") || fromUser.equals("4") /) ) {
 					System.out.println("\nMust be a number from 1 to 4: ");
 					getInput();
-				}
+				}*/
 				
-				if (fromUser.equals("1")) {
-					out.println("1 " + withdraw());
+				double d = Double.parseDouble(fromUser);
+				if (d==1/*fromUser.equals("1")*/) {
+					withdraw();
+					out.println("1 " + fromUser);
 					fromServer = in.readLine();
 				}
-				else if (fromUser.equals("2")) {
-					out.println("2 " + deposit());
+				else if (d==2/*fromUser.equals("2")*/) {
+					deposit();
+					out.println("2 " + fromUser);
 					fromServer = in.readLine();
 				}
-				else if (fromUser.equals("3 ")) {
-					out.println("3 ");
+				else if (d==3/*fromUser.equals("3 ")*/) {
+
+					System.out.println("Balance");
+					out.println("3");
 					balance(in.readLine());
 				}
-				else {
+				else if (d==4) {
 					terminate = true;
+					out.println("4 ");
 				}
-					
+				else { System.out.println("You must type a number from 1 to 4"); }
+				
+				System.out.println(fromServer);
 			}
 			
 			
@@ -97,7 +106,7 @@ public class AtmClient {
 	}
 
 	private String deposit() {
-		System.out.println("\n---Withdraw---\n"+ "Amount: ");
+		System.out.println("\n---Deposit---\n"+ "Amount: ");
 		getInput();
 		return fromUser;
 		
@@ -118,8 +127,11 @@ public class AtmClient {
 			while (flag) {
 				fromUser = stdIn.readLine();
 				fromUser.trim();
+				//System.out.println(fromUser);
 				if(fromUser.matches("\\d+")) { flag = false; }
 				else { System.out.println("Must type digits!"); }
+						//System.out.println(fromUser);
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -129,10 +141,10 @@ public class AtmClient {
 	public void connectAccount() {
 		System.out.println("\nGive your account ID :");
 		getInput();
-		while(!fromUser.matches("\\d+")){
+		/*while(!fromUser.matches("\\d+")){
 			System.out.println("\nMust be a number");
 			getInput();
-		}
+		}*/
 	}
 	
 	
