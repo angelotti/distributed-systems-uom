@@ -2,12 +2,19 @@
 public class Protocol {
 	private boolean terminate = false;
 	private String toUser;
+	private Account acc;
+	private BankServer bs;
+	
+	public Protocol(BankServer bs){
+		this.bs = bs;
+	}
 	
 	public String findAccount(String input){
 		String[] exp = input.split(" ");
 		
 		if (exp[0].equals("ID")) {
-			return "ID query";
+			acc = bs.retrieveAccount(exp[1]);
+			return acc.getID();
 		} else {
 			return "E 101";
 		}
@@ -41,19 +48,22 @@ public class Protocol {
 		if(amount > 600) {
 			return "E 102";
 		} else {
-			return "withdraw query" ;
+			acc.withdraw(amount);
+			bs.transaction(acc, "Withdraw", amount);
+			return "Withdrawn "+amount+" Euro" ;
 		}
 	}
 	
 	public String deposit(String m) {
 		double amount = Double.parseDouble(m); 
-
-		return "deposit query";
+		acc.deposit(amount);
+		bs.transaction(acc, "Deposit", amount);
+		return "Added "+amount+" Euro";
 	}
 	
 	public String printBalance() {
-		
-		return "Balance: ";
+		bs.transaction(acc, "Check Balance", 0);
+		return "Balance: "+acc.getBalance();
 		
 	}
 	

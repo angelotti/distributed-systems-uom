@@ -8,12 +8,13 @@ import java.net.Socket;
 public class BankServerThread extends Thread {
 	private String fromUser, toUser;
 	private Socket socket = null;
-	private Protocol p = new Protocol();
+	private Protocol p;
 	private boolean terminate = false;//true;
 	
-	public BankServerThread(Socket socket, int n) {
+	public BankServerThread(Socket socket, BankServer bs, int n) {
 		super("BankServerThread, Thread "+n);
 		this.socket = socket;
+		p = new Protocol(bs);
 	}
 	
 	public void run() {
