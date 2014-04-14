@@ -95,11 +95,11 @@ public class BankServer {
 			Date date = new Date();
 			pstmt.setString(1, dateFormat.format(date));
 			
-			pstmt.setString(2, a.getID());
+			pstmt.setInt(2, Integer.parseInt(a.getID()));
 			pstmt.setString(3, type);
 			pstmt.setDouble(4, amount);
-			
-			if(!type.equals("Check Balance")){ updateAccount(a); }
+			pstmt.executeUpdate();
+			updateAccount(a); 
 			
 			pstmt.close();
 		} catch (SQLException e) {
@@ -109,12 +109,14 @@ public class BankServer {
 	
 	
 	public void updateAccount (Account a) {
-		String sql = "UPDATE Transactions SET Balance = ? WHERE ID = ?";
+		String sql = "UPDATE Customers SET Balance = ? WHERE ID = ?";
 		PreparedStatement pstmt;
+		int id = Integer.parseInt(a.getID());
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setDouble(1, a.getBalance());
-			pstmt.setInt(2, Integer.parseInt(a.getID()));
+			pstmt.setInt(2, id);
+			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
