@@ -45,8 +45,14 @@ public class AtmClient {
 			
 			connectAccount();
 			out.println("ID "+fromUser);
-			System.out.println(in.readLine());
-
+			fromServer = in.readLine();
+			if(fromServer==null){
+				System.out.println("Account not found");
+				terminate = true;
+			} else {
+				System.out.println("Connected to account: "+fromServer);
+			}
+			
 			while (!terminate) {
 				printMenu();
 				getInput();
@@ -61,25 +67,29 @@ public class AtmClient {
 					withdraw();
 					out.println("1 " + fromUser);
 					fromServer = in.readLine();
+					System.out.println(fromServer);
 				}
 				else if (d==2/*fromUser.equals("2")*/) {
 					deposit();
 					out.println("2 " + fromUser);
 					fromServer = in.readLine();
+					System.out.println(fromServer);
 				}
 				else if (d==3/*fromUser.equals("3 ")*/) {
 
 					System.out.println("Balance");
 					out.println("3");
 					balance(in.readLine());
+					System.out.println(fromServer);
 				}
 				else if (d==4) {
 					terminate = true;
 					out.println("4 ");
+					System.out.println("\n-_-_-_See you_-_-_-\n");
 				}
 				else { System.out.println("You must type a number from 1 to 4"); }
 				
-				System.out.println(fromServer);
+				
 			}
 			
 			
