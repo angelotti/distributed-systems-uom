@@ -70,11 +70,16 @@ public class CalcClient {
 		String msg;
 		try {
 			msg = in.readLine();
+			msg.trim();
 			if(!msg.equals("exit")){
 				String[] expression = msg.split(" ");
-				a = Double.parseDouble(expression[1]);
-				b = Double.parseDouble(expression[2]);
-				return expression[0];
+				if(expression.length == 3){
+					if (expression[0].matches("[+\\-*/]") && expression[1].matches("\\d+") && expression[2].matches("\\d+") ){
+						a = Double.parseDouble(expression[1]);
+						b = Double.parseDouble(expression[2]);
+						return expression[0];
+					}
+				}
 			} else {
 				return "exit" ;
 			}
@@ -83,6 +88,7 @@ public class CalcClient {
 			e.printStackTrace();
 			return null;
 		}
+		return "error";
 		
 	}
 
