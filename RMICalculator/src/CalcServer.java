@@ -8,7 +8,6 @@ public class CalcServer {
 	
 	public static void main (String args[]) {
 		try {
-			System.setSecurityManager(new RMISecurityManager());
 			
 			CalcImpl c = new CalcImpl();
 			
