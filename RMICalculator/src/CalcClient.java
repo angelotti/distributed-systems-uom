@@ -15,7 +15,8 @@ public class CalcClient {
 	public CalcClient(){
 		System.out.print("\n***Welcome to CalcClient!***\n"
 				+ " Type me some math and my friend CalcServer will tell you the answer!!\n\n"
-				+ "Be careful everything must be space-separated! Something like this \"+ 3 5\" \n ");
+				+ "Be careful everything must be space-separated! Something like this \"+ 3 5\" \n"
+				+ "\nFor terminating CalcClient type \"exit\" \n\n");
 	}
 
 	public static void main(String[] args) {
